@@ -87,7 +87,7 @@ def generate_launch_description():
                 package='controller_manager',
                 executable='spawner',
                 output='screen',
-                arguments=["forward_velocity_controller:"]
+                arguments=["forward_velocity_controller"]
             )
         ]
     )

@@ -75,6 +75,6 @@ diff_cont:
 forward_velocity_controller:
   ros__parameters:
     joints:
-      - diff_cont/angular/velocity
-      - diff_cont/linear/velocity
+      - diff_cont/angular
+      - diff_cont/linear
     interface_name: velocity
