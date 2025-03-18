@@ -9,6 +9,9 @@ controller_manager:
     joint_broad:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+    forward_velocity_controller:
+      type: forward_command_controller/ForwardCommandController
+
 diff_cont:
   ros__parameters:
 
@@ -16,10 +19,7 @@ diff_cont:
 
     base_frame_id: base_footprint
 
-    command_interfaces : 
-      - velocity
-
-    interface_name : velocity
+    interfaces: ["angular/velocity","linear/velocity"]
 
     left_wheel_names: ['base_left_wheel_joint','base_left_wheel2_joint']
     right_wheel_names: ['base_right_wheel_joint','base_right_wheel2_joint']
@@ -71,3 +71,10 @@ diff_cont:
 
 # joint_broad:
 #   ros__parameters:
+
+forward_velocity_controller:
+  ros__parameters:
+    joints:
+      - diff_cont/angular/velocity
+      - diff_cont/linear/velocity
+    interface_name: velocity

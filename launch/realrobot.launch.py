@@ -79,6 +79,18 @@ def generate_launch_description():
             )
         ]
     )
+
+    forward_velocity_controller = TimerAction(
+        period=12.0, 
+        actions=[
+            Node(
+                package='controller_manager',
+                executable='spawner',
+                output='screen',
+                arguments=["forward_velocity_controller:"]
+            )
+        ]
+    )
     
     # Launch!
     return LaunchDescription([
@@ -88,6 +100,7 @@ def generate_launch_description():
         #slam_launch,
         diff_drive_controller,
         joint_state_broadcaster,
-        twist_mux
+        twist_mux,
+        forward_velocity_controller
     ])
 
