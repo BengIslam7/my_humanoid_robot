@@ -81,7 +81,7 @@ def generate_launch_description():
     )
 
     forward_velocity_controller = TimerAction(
-        period=12.0, 
+        period=14.0, 
         actions=[
             Node(
                 package='controller_manager',
