@@ -91,6 +91,8 @@ def generate_launch_description():
             )
         ]
     )
+
+    control=Node(package='diffdrive_arduino',executable='control_bridge_node',name='control_bridge',output='screen')
     
     # Launch!
     return LaunchDescription([
@@ -101,6 +103,7 @@ def generate_launch_description():
         diff_drive_controller,
         joint_state_broadcaster,
         twist_mux,
-        forward_velocity_controller
+        forward_velocity_controller,
+        control
     ])
 
