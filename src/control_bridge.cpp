@@ -17,7 +17,7 @@ public:
 private:
     void control_callback(const geometry_msgs::msg::Twist::SharedPtr msg) {
         auto command_msg = std_msgs::msg::Float64MultiArray();
-        command_msg.data = {msg->linear.x, msg->angular.z};  // Example mapping
+        command_msg.data = {msg->angular.z, msg->linear.x};  // Example mapping
         publisher_->publish(command_msg);
     }
 
