@@ -7,15 +7,14 @@ import numpy as np
 import supervision as sv
 from ultralytics import YOLO
 import cv2
-from cv_bridge import CvBridge
+
 
 class ObjectDetectionNode(Node):
     def __init__(self):
         super().__init__('object_detection_node')
         self.publisher_twist = self.create_publisher(Twist, '/diff_cont/cmd_vel_unstamped', 10)
-        
-        self.bridge = CvBridge()
-        self.model = YOLO('/content/gdrive/MyDrive/yolov9e_int8.tflite')
+
+        self.model = YOLO('/home/pfe/work/src/diffdrive_arduino/models/yolov9e_int8.tflite')
         
         self.timer = self.create_timer(0.1, self.process_frame)
         self.cap = cv2.VideoCapture(0)
