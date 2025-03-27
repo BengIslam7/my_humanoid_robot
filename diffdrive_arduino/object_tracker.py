@@ -26,7 +26,7 @@ class ObjectDetectionNode(Node):
             self.get_logger().warn("Failed to capture frame.")
             return
         
-        results = self.model(frame, imgsz=640)[0]
+        results = self.model(frame, imgsz=320)[0]
         detections = sv.Detections.from_yolov8(results)
         
         if len(detections.xyxy) == 0:
