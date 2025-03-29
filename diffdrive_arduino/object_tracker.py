@@ -7,6 +7,9 @@ import numpy as np
 import supervision as sv
 from ultralytics import YOLO
 import cv2
+from scipy.spatial.distance import cosine
+from deepface import DeepFace
+import time
 
 
 class ObjectDetectionNode(Node):
@@ -19,7 +22,21 @@ class ObjectDetectionNode(Node):
         self.timer = self.create_timer(0.1, self.process_frame)
         self.cap = cv2.VideoCapture(0)
         self.w, self.h = (int(self.cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT))
-    
+
+        with open('/home/pfe/work/src/diffdrive_arduino/face_features/my_features.npy', 'rb') as f:
+            self.reference_embeddings = np.load(f)
+
+    def is_me(self, new_image, threshold=0.6):
+        new_embedding = np.array(DeepFace.represent(img_path=new_image, model_name="Facenet", enforce_detection=False)[0]["embedding"])
+
+        # Compute cosine similarity with all reference embeddings
+        similarities = [1 - cosine(new_embedding, ref_emb) for ref_emb in self.reference_embeddings]
+
+        # Take the highest similarity score
+        max_similarity = max(similarities)
+
+        return max_similarity > threshold, max_similarity  # Return decision & similarity score
+
     def process_frame(self):
         success, frame = self.cap.read()
         if not success:
@@ -35,16 +52,19 @@ class ObjectDetectionNode(Node):
         
         max_conf_index = np.argmax(detections.confidence)
         
-        classes = self.model.names
+        classes = self.model.names()
         for x in detections.class_id:
             self.get_logger().info("Object Detected : "+classes[x])
-            
 
         x = (detections.xyxy[max_conf_index][0] + detections.xyxy[max_conf_index][2]) / 2
         y = (detections.xyxy[max_conf_index][1] + detections.xyxy[max_conf_index][3]) / 2
         
         self.get_logger().info(f"Object tracked : {classes[detections.class_id[max_conf_index]]}, X = {x}, Y = {y}, Confidence = {detections.confidence[max_conf_index]}")
         
+        if(detections.class_id[max_conf_index]==0):
+            result, score = self.is_me(frame)
+            self.get_logger().info(f"Is it Islam? {result} Similarity={score}")
+
         twist_msg = Twist()
         
         tw = False
@@ -67,7 +87,16 @@ class ObjectDetectionNode(Node):
                 twist_msg.linear.x = 0.0  # Stop
         
         self.publisher_twist.publish(twist_msg)
-    
+
+        time.sleep(0.5)
+
+        twist_msg.angular.z = 0.0
+        twist_msg.linear.x = 0.0
+
+        self.publisher_twist.publish(twist_msg)
+
+        time.sleep(1)
+
     def destroy_node(self):
         self.cap.release()
         cv2.destroyAllWindows()
