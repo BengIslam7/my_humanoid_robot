@@ -23,7 +23,7 @@ class ObjectDetectionNode(Node):
         self.cap = cv2.VideoCapture(0)
         self.w, self.h = (int(self.cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT))
 
-        with open('/home/pfe/work/src/diffdrive_arduino/face_features/all.npy', 'rb') as f:
+        with open('/home/pfe/work/src/diffdrive_arduino/face_features/my_features.npy', 'rb') as f:
             self.reference_embeddings = np.load(f)
 
     def is_me(self, new_image, threshold=0.6):
