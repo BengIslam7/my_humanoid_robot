@@ -15,7 +15,7 @@ class ObjectDetectionNode(Node):
     def __init__(self):
         super().__init__('object_detection_node')
 
-        self.interpreter = tf.lite.Interpreter(model_path='/home/pfe/work/src/diffdrive_arduino/models/model.tflite')
+        self.interpreter = tf.lite.Interpreter(model_path='/home/pfe/work/src/diffdrive_arduino/models/MobileNet-SSD-V3.tflite')
         self.interpreter.allocate_tensors()
 
 	    # Get input and output tensors
