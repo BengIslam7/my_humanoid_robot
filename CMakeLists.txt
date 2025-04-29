@@ -21,8 +21,16 @@ find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
 add_executable(control_bridge_node src/control_bridge.cpp)
+add_executable(nav_cmd_node src/nav_cmd.cpp)
+
 
 ament_target_dependencies(control_bridge_node
+  rclcpp
+  geometry_msgs
+  std_msgs
+)
+
+ament_target_dependencies(nav_cmd_node
   rclcpp
   geometry_msgs
   std_msgs
@@ -82,6 +90,11 @@ install(TARGETS diffdrive_arduino
 
 install(TARGETS
   control_bridge_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(TARGETS
+  nav_cmd_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
