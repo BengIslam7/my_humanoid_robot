@@ -12,7 +12,7 @@ int main(int argc, char * argv[])
     // Give publisher time to establish connection (optional)
     rclcpp::sleep_for(std::chrono::milliseconds(100));
 
-    float vel[6] = {0.5, 0.0, 0.0, 0.0, 0.0, 0.5};
+    float vel[6] = {0.25, 0.0, 0.25, 0.5, 0.9, 0.5};
     
     int len = sizeof(vel) / sizeof(vel[0]);
     
@@ -28,7 +28,8 @@ int main(int argc, char * argv[])
     	msg.linear.x = vel[i];
     	msg.angular.z = vel[i+1];
 
-   	RCLCPP_INFO(node->get_logger(), "Publishing to /diff_cont/cmd_vel_unstamped");
+   	RCLCPP_INFO(this->get_logger(), "Publishing commands to /diff_cont/cmd_vel_unstamped : [%f, %f]", msg->linear.x, msg->angular.z);
+
 
     	publisher->publish(msg);
     	

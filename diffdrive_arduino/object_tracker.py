@@ -17,6 +17,8 @@ class ObjectDetectionNode(Node):
 
         self.interpreter = tf.lite.Interpreter(model_path='/home/pfe/work/src/diffdrive_arduino/models/MobileNet-SSD-V3.tflite')
         self.interpreter.allocate_tensors()
+        
+        self.publisher_twist = self.create_publisher(Twist, '/diff_cont/cmd_vel_unstamped', 10)
 
 	    # Get input and output tensors
         self.input_details = self.interpreter.get_input_details()
