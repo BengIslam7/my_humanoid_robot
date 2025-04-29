@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
     	msg.linear.x = vel[i];
     	msg.angular.z = vel[i+1];
 
-   	RCLCPP_INFO(this->get_logger(), "Publishing commands to /diff_cont/cmd_vel_unstamped : [%f, %f]", msg->linear.x, msg->angular.z);
+   	RCLCPP_INFO(node->get_logger(), "Publishing commands to /diff_cont/cmd_vel_unstamped : [%f, %f]", msg.linear.x, msg.angular.z);
 
 
     	publisher->publish(msg);
