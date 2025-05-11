@@ -43,8 +43,6 @@ struct Config
 {
   std::string left_wheel_name = "";
   std::string right_wheel_name = "";
-  std::string rleft_wheel_name = "";
-  std::string rright_wheel_name = "";
   float loop_rate = 0.0;
   std::string device = "";
   int baud_rate = 0;
@@ -101,8 +99,6 @@ private:
   Config cfg_;
   Wheel wheel_l_;
   Wheel wheel_r_;
-  Wheel wheel_rl_;
-  Wheel wheel_rr_;
 };
 
 }  // namespace diffdrive_arduino
