@@ -50,6 +50,7 @@ class ObjectDetectionNode(Node):
 
         self.timer = self.create_timer(0.1, self.process_frame)
         self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         self.w, self.h = (int(self.cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT))
 
         with open('/home/pfe/work/src/diffdrive_arduino/face_features/my_features.npy', 'rb') as f:
