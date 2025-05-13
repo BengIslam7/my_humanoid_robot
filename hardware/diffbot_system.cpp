@@ -112,7 +112,7 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_init(
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-std::vector<hardware_interface::StateInterface> DiffDriveArduinoHardware::export_state_interfaces()
+/*std::vector<hardware_interface::StateInterface> DiffDriveArduinoHardware::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
 
@@ -127,7 +127,7 @@ std::vector<hardware_interface::StateInterface> DiffDriveArduinoHardware::export
     wheel_r_.name, hardware_interface::HW_IF_VELOCITY, &wheel_r_.vel));
 
   return state_interfaces;
-}
+}*/
 
 std::vector<hardware_interface::CommandInterface> DiffDriveArduinoHardware::export_command_interfaces()
 {
@@ -178,10 +178,10 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_activate(
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
-  if (cfg_.pid_p > 0)
+  /*if (cfg_.pid_p > 0)
   {
     //comms_.set_pid_values(cfg_.pid_p,cfg_.pid_d,cfg_.pid_i,cfg_.pid_o);
-  }
+  }*/
   RCLCPP_INFO(rclcpp::get_logger("DiffDriveArduinoHardware"), "Successfully activated!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
@@ -196,8 +196,8 @@ hardware_interface::CallbackReturn DiffDriveArduinoHardware::on_deactivate(
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type DiffDriveArduinoHardware::read(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
+/*hardware_interface::return_type DiffDriveArduinoHardware::read(
+  const rclcpp::Time &, const rclcpp::Duration & period)
 {
   if (!comms_.connected())
   {
@@ -217,7 +217,7 @@ hardware_interface::return_type DiffDriveArduinoHardware::read(
   wheel_r_.vel = (wheel_r_.pos - pos_prev) / delta_seconds;
 
   return hardware_interface::return_type::OK;
-}
+}*/
 
 hardware_interface::return_type diffdrive_arduino ::DiffDriveArduinoHardware::write(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
